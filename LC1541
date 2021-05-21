@@ -1,0 +1,39 @@
+class Solution:
+    def minInsertions(self, s: str) -> int:
+        stack = []
+        res = 0
+        slist = list(s)
+        closing = False
+        i = 0
+        while i < len(slist):
+            if slist[i] == "(" and not closing:
+                stack.append(slist[i])
+            elif slist[i] == "(" and closing:
+                if stack:
+                    stack.pop()
+                    res+= 1
+                    closing = False
+                else:
+                    res += 2
+                closing = False
+                stack.append(slist[i])
+            elif slist[i] == ")" and not closing:
+                closing = True
+            elif  slist[i] == ")" and closing:
+                if stack:
+                    stack.pop()
+                    closing = False
+                else:
+                    res += 1
+                    closing = False            
+            i += 1            
+        if closing:
+            if stack:
+                stack.pop()
+                res += 1
+            else:
+                res += 2        
+        while stack:
+            res += 2
+            stack.pop()        
+        return res
