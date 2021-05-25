@@ -1,0 +1,15 @@
+class Solution:
+    def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:      
+        sum, res = 0, 0
+        l, count = 0, 0
+        for i in range(len(nums)):
+            sum += nums[i]
+            if nums[i] == 1:
+                count = 0
+            while l <= i and sum >= goal:
+                if sum == goal:
+                    count += 1
+                sum = sum-nums[l]
+                l += 1
+            res += count
+        return res
