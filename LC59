@@ -1,0 +1,19 @@
+class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        res = [[0]*n for i in range(n)]
+        cur = 0
+        for layer in range((n+1)//2):
+            for ptr in range(layer, n-layer):
+                cur += 1
+                res[layer][ptr] = cur
+            for ptr in range(layer+1, n-layer):
+                cur += 1
+                res[ptr][n-layer-1] = cur
+            for ptr in range(n-layer-2, layer-1, -1):
+                cur += 1
+                res[n-layer-1][ptr] = cur
+            for ptr in range(n-layer-2, layer, -1):
+                cur += 1
+                res[ptr][layer] = cur
+        return res
+                
