@@ -1,0 +1,28 @@
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        m = len(matrix)
+        n = len(matrix[0])
+        lm = 0
+        ln = 0
+        res = []
+        while lm < (m+1)//2 and ln < (n+1)//2:
+            for i in range(ln, n-ln):
+                res.append(matrix[lm][i])
+            for i in range(lm+1, m-lm):
+                res.append(matrix[i][n-ln-1])
+            for i in range(n-ln-2, ln-1, -1):
+                if lm != m-lm-1:
+                    res.append(matrix[m-lm-1][i])
+                else:
+                    break
+            for i in range(m-lm-2, lm, -1):
+                if ln != n-ln-1:
+                    res.append(matrix[i][ln])
+                else:
+                    break
+            
+            lm += 1
+            ln += 1
+            
+        return res
+                
