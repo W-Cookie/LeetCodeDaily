@@ -1,0 +1,35 @@
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        
+        # actually not needed
+#         def swap(i,j):
+#             temp = nums[i]
+#             nums[i] = nums[j]
+#             nums[j] = temp
+        
+        if len(nums) == 1:
+            return 1
+        
+        res_last = 0
+        index = 1
+        
+        count = 1        
+        while index < len(nums):
+            if nums[index] != nums[res_last]:
+                # actually there is no need to swap, we can just copy nums[index] to nums[res_last+1]
+                # swap(res_last+1, index)
+                nums[res_last+1]= nums[index]
+                res_last += 1
+                index += 1
+                count= 1
+            elif nums[index] == nums[res_last] and count < 2:
+                nums[res_last+1]= nums[index]
+                res_last += 1
+                index += 1
+                count += 1
+            else:
+                index += 1
+        return res_last + 1
+                
+        
+        
