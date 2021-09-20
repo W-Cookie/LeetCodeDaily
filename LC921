@@ -1,0 +1,25 @@
+# class Solution:
+#     def minAddToMakeValid(self, s: str) -> int:
+#         if not s:
+#             return 0
+#         stack = []
+#         for c in s:
+#             if not stack:
+#                 stack.append(c)
+#             else:
+#                 if stack[-1] == "(" and c == ")":
+#                     stack.pop()
+#                 else:
+#                     stack.append(c)
+#         return len(stack)
+
+class Solution(object):
+    def minAddToMakeValid(self, S):
+        ans = bal = 0
+        for symbol in S:
+            bal += 1 if symbol == '(' else -1
+            # It is guaranteed bal >= -1
+            if bal == -1:
+                ans += 1
+                bal += 1
+        return ans + bal
