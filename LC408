@@ -1,0 +1,32 @@
+class Solution:
+    def validWordAbbreviation(self, word: str, abbr: str) -> bool:
+        i = 0
+        sub = ""
+        for s in abbr:
+            if s.isdigit():
+                sub += s
+            else:
+                if len(sub) > 0:
+                    if sub[0] == "0":
+                        return False
+                    else:
+                        i += int(sub)
+                        if i >= len(word) or word[i] != s:
+                            return False
+                        else:
+                            i += 1
+                    sub = ""
+                else:
+                    i += 1
+                    
+        if len(sub) > 0:
+            if sub[0] == "0":
+                return False
+            else:
+                i += int(sub)
+                        
+        if i != len(word):
+            return False
+        return True
+        
+                    
