@@ -1,0 +1,43 @@
+class Solution:
+    def largestIsland(self, grid: List[List[int]]) -> int:
+        index = 2
+        area = {}
+        max = 0
+        def dfs(r, c, index):
+            if r >= len(grid) or c >= len(grid[0]) or r<0 or c<0 or grid[r][c] == 0:
+                return 
+            if grid[r][c] == 1:
+                grid[r][c] = index
+                
+                if index not in area:
+                    area[index] = 1
+                else:
+                    area[index] += 1
+
+                dfs(r+1, c, index)
+                dfs(r-1, c, index)
+                dfs(r, c+1, index)
+                dfs(r, c-1, index)
+        
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 1:
+                    dfs(i, j, index)
+                    if max < area[index]:
+                        max = area[index]
+                    index += 1
+        
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 0:
+                    seen = []
+                    current = 1
+                    for nr, nc in ((i-1, j), (i+1, j), (i, j-1), (i, j+1)):
+                        if nr >= len(grid) or nc >= len(grid[0]) or nr<0 or nc<0:
+                            continue
+                        if grid[nr][nc] != 0 and grid[nr][nc] not in seen:
+                                current += area[grid[nr][nc]]
+                                seen.append(grid[nr][nc])
+                    if max < current:
+                        max = current
+        return max
