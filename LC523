@@ -1,0 +1,13 @@
+class Solution:
+    def checkSubarraySum(self, nums: List[int], k: int) -> bool:
+        # edge case when currentsum mod k == 0
+        mods = {0:-1}
+        cursum = 0
+        for i in range(len(nums)):
+            cursum += nums[i]
+            mod = cursum % k
+            if mod in mods and i - mods[mod] >= 2:
+                return True
+            if mod not in mods:
+                mods[mod] = i
+        return False
