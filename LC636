@@ -1,0 +1,26 @@
+class Solution:
+    def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
+        base_time = 0
+        stack = []
+        ans = [0] * n
+        stack = []
+        
+        for log in logs:
+            fid, cmd, time = log.split(":")
+            time = int(time)
+            fid = int(fid)
+            
+            if cmd == "start":
+                if stack:
+                    ans[stack[-1]] += time - base_time
+                stack.append(fid)
+                base_time = time
+            else:
+                ans[stack.pop()] += time - base_time + 1
+                base_time = time + 1
+                
+        return ans
+                    
+                    
+                
+                
