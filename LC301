@@ -1,0 +1,37 @@
+class Solution:
+    def removeInvalidParentheses(self, s: str) -> List[str]:
+        il, ir = 0, 0
+        res = set()
+        for i in s:
+            if i == "(":
+                il += 1
+            elif i == ")":
+                if il == 0:
+                    ir += 1
+                else:
+                    il -= 1
+        # p represent opening bracket
+        def backtrack(index, l, r, p, cur_s, res):
+            if index == len(s):
+                if l == 0 and r == 0 and p == 0:
+                    res.add(cur_s)
+                return 
+            if s[index] != "(" and s[index] != ")":
+                backtrack(index +1, l, r, p, cur_s + s[index], res)
+            if s[index] == "(":
+                if l > 0:
+                    # if we remove this "("
+                    backtrack(index+1, l-1, r, p, cur_s, res)
+                # either l > 0 or l = 0, we have the choice to keep this "("
+                backtrack(index +1, l, r, p+1, cur_s + s[index], res)
+            if s[index] == ")":
+                if r > 0:
+                    # if we remove this "("
+                    backtrack(index+1, l, r-1, p, cur_s, res)
+                # if p > 0, we have the choice to keep this ")"                
+                if p > 0:
+                    backtrack(index +1, l, r, p-1, cur_s + s[index], res)
+        backtrack(0, il, ir, 0, "", res)
+        return list(res)
+            
+            
