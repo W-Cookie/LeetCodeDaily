@@ -1,0 +1,9 @@
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        #O(Nlogk)
+        return heapq.nlargest(k, nums)[-1]
+#         # solution 1
+#         nums.sort()
+#         return nums[len(nums) - k]
+
+        
