@@ -1,0 +1,37 @@
+class Solution:
+    def shortestDistance(self, grid: List[List[int]]) -> int:    
+        def bfs(start_x, start_y):
+            queue = [(start_x, start_y, 0)]
+            visited = set()
+            visited.add((i,j))
+            while queue:
+                x, y, distance = queue.pop(0)
+                for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    cx = x+dx
+                    cy = y+dy
+                    if cx >= 0 and cx < m and cy >=0 and cy < n and grid[cx][cy] == 0 and (cx,cy) not in visited:
+                        distance_matrix[cx][cy] += distance+1
+                        count_matrix[cx][cy] += 1
+                        queue.append((cx, cy, distance+1))
+                        visited.add((cx, cy))
+                        
+        m, n = len(grid), len(grid[0])
+        distance_matrix = [[0]*n for _ in range(m)] 
+        count_matrix = [[0]*n for _ in range(m)] 
+        count = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    bfs(i, j)
+                    count += 1
+                    
+        res = float('inf')
+        for i in range(m):
+            for j in range(n):
+                if distance_matrix[i][j] > 0 and count_matrix[i][j] == count and distance_matrix[i][j] < res:
+                    res = distance_matrix[i][j]
+        
+        if res != float('inf'):
+            return res
+        else:
+            return -1
