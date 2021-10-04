@@ -1,0 +1,64 @@
+class Solution:
+    def minPushBox(self, grid: List[List[str]]) -> int:
+        def movable(row, col):
+            if grid[row+1][col] != '#' and grid[row-1][col] != '#' and row < len(grid)- 1 and row > 0:
+                return True
+            elif grid[row][col+1]!= '#' and grid[row][col-1] != '#' and col < len(grid[0])- 1 and col > 0:
+                return True
+            else:
+                return False
+        m, n = len(grid), len(grid[0])
+        
+        # find player, target and the box
+        for row in range(m):
+            for col in range(n):
+                if grid[row][col] == 'S':
+                    player = (row, col)
+                elif grid[row][col] == 'B':
+                    box = (row, col)
+                if grid[row][col] == 'T':
+                    target = (row, col)
+        
+        # check if cell is valid to go:
+        def valid(x, y):
+            if x<m and x>=0 and y<n and y>=0 and grid[x][y] != "#":
+                return True
+            else:
+                return False
+        
+        # check if the player can access the destination
+        def access(curr, dest, box):
+            queue = [curr]
+            visited = set()
+            while queue:
+                cell = queue.pop(0)
+                if cell == dest:
+                    return True
+                else:
+                    neighbors = [(cell[0]+1, cell[1]), (cell[0]-1, cell[1]), (cell[0], cell[1]+1), (cell[0], cell[1]-1)]
+                    for row, col in neighbors:
+                        if valid(row, col) and (row, col) not in visited and (row, col) != box:
+                            queue.append((row, col))
+                            visited.add((row, col))
+        
+        q = [(0, box, player)]
+        v = set((box, player))
+        
+        while q:
+            dist, box, player = q.pop(0)
+            if box == target:
+                return dist
+            
+            #these are the new possible coordinates/indices box can be placed in (up, down, right, left).
+            b_coord = [(box[0]+1,box[1]),(box[0]-1,box[1]),(box[0],box[1]+1),(box[0],box[1]-1)]
+            #these are the corresponding coordinates the player has to be in to push 
+            p_coord = [(box[0]-1,box[1]),(box[0]+1,box[1]),(box[0],box[1]-1),(box[0],box[1]+1)]
+            
+            for new_box,new_player in zip(b_coord,p_coord): 
+            # we check if the new box coordinates are valid and our current state is not in vis
+                if valid(*new_box) and (new_box, new_player) not in v:
+                    # we check corresponding person coordinates are valid and if it is possible for the person to reach the new coordinates
+                    if valid(*new_player) and access(player,new_player,box):
+                        v.add((new_box, new_player))
+                        q.append((dist+1,new_box,box))
+        return -1 
