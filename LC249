@@ -1,0 +1,19 @@
+    def groupStrings(self, strings: List[str]) -> List[List[str]]:
+        def reduce(s):
+            res = ""
+            diff = ord(s[0]) - ord('a')
+            for c in s:
+                if ord(c)-diff < ord('a'):
+                    res += chr(ord(c)+ 26 - diff)
+                else:
+                    res += chr(ord(c) - diff)
+            return res
+        dict = {}
+        for string in strings:
+            reduced = reduce(string)
+            if reduced not in dict:
+                dict[reduced] = [string]
+            else:
+                dict[reduced].append(string)
+        return dict.values()
+        
