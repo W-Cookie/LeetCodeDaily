@@ -1,0 +1,16 @@
+class Solution:
+    def maximumSwap(self, num: int) -> int:
+        s = str(num)
+        diff = 0
+        swap_index = 0
+        res = ""
+        for i in range(len(s)):
+            for j in range(i+1,len(s)):
+                if ord(s[i])-ord(s[j]) <= diff:
+                    diff = ord(s[i])-ord(s[j])
+                    swap_index = j
+            if diff<0:
+                res = s[0:i]+s[swap_index]+s[i+1:swap_index]+s[i]+s[swap_index+1:len(s)]
+                return int(res)
+        return num
+            
