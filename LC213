@@ -1,0 +1,28 @@
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+        
+        def linerob(nums):
+            if not nums:
+                return 0
+        
+            if len(nums) == 1:
+                return nums[0]
+        
+            pre_pre = 0
+            pre = nums[0]
+            for i in range(1, len(nums)):
+                current = nums[i] + pre_pre
+                if current > pre:
+                    pre_pre = pre
+                    pre = current
+                else:
+                    pre_pre = pre
+            return pre
+        return max(linerob(nums[:-1]), linerob(nums[1:]))   
+        
+        
+        
