@@ -1,0 +1,21 @@
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        
+        if len(nums) == 1:
+            return nums[0]
+        
+        house_before_before = 0
+        house_before = nums[0]
+        
+        for i in range(1, len(nums)):
+            if house_before_before + nums[i] > house_before:
+                temp = house_before
+                house_before = house_before_before + nums[i]
+                house_before_before = temp
+            else:
+                house_before_before = house_before
+
+                
+        return house_before
