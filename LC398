@@ -1,32 +1,21 @@
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
 class Solution:
-    def largestValues(self, root: Optional[TreeNode]) -> List[int]:
-        
-        if not root:
-            return []
-        
-        queue = [(root, 0)]
-        res = [root.val]
-        current_level = 0
-        
-        while queue:
-            node, level = queue.pop(0)
-            
-            if current_level != level:
-                res.append(node.val)
+
+    def __init__(self, nums: List[int]):
+        self.dict = {}
+        for i in range(len(nums)):
+            if nums[i] not in self.dict:
+                self.dict[nums[i]] = [i]
             else:
-                res[level] = max(res[level], node.val)
+                self.dict[nums[i]].append(i)
                 
-            if node.left:
-                queue.append((node.left, level + 1))
-            if node.right:
-                queue.append((node.right, level + 1))
-            
-            current_level = level
-        return res
+
+    def pick(self, target: int) -> int:
+        min_index = 0
+        max_index = len(self.dict[target])-1
+        return self.dict[target][random.randint(min_index, max_index)]
         
+
+
+# Your Solution object will be instantiated and called as such:
+# obj = Solution(nums)
+# param_1 = obj.pick(target)
