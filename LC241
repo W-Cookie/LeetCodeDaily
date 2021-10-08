@@ -1,0 +1,20 @@
+class Solution:
+    def diffWaysToCompute(self, expression: str) -> List[int]:
+        #recursion with memorization
+        memo = {}
+        def helper(expression, memo):
+            if expression in memo:
+                return memo[expression]
+            if expression.isdigit():
+                return [int(expression)]
+            res = []
+            for i in range(len(expression)):
+                if expression[i] in "+-*":
+                    left_res = helper(expression[:i], memo)
+                    right_res = helper(expression[i+1:], memo)
+                    for left in left_res:
+                        for right in right_res:
+                            res.append(eval(str(left)+expression[i]+str(right)))
+            memo[expression] = res
+            return res
+        return helper(expression, memo)
