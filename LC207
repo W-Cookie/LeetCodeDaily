@@ -1,0 +1,37 @@
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # topological sort
+        if not prerequisites:
+            return True
+        
+        in_degree = {}
+        adj_list = {}
+        for prerequisite in prerequisites:
+            [a, b] = prerequisite
+            if a not in adj_list:
+                adj_list[a] = [b]
+            else:
+                if b not in adj_list[a]:
+                    adj_list[a].append(b)
+            if b not in adj_list:
+                adj_list[b] = []
+            in_degree[a] = in_degree.get(a, 0)
+            in_degree[b] = in_degree.get(b, 0) + 1
+        
+        queue = [ course for course in in_degree if in_degree[course] == 0]
+        
+        if not queue:
+            return False
+        counter = 0
+        
+        while queue:
+            course = queue.pop(0)
+            counter += 1
+            for nextc in adj_list[course]:
+                in_degree[nextc] -= 1
+                if in_degree[nextc] == 0:
+                    queue.append(nextc)
+        if counter < len(in_degree):
+            return False
+        else:
+            return numCourses >= counter
