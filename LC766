@@ -1,0 +1,15 @@
+class Solution:
+    def isToeplitzMatrix(self, matrix: List[List[int]]) -> bool:
+        m = len(matrix)
+        n = len(matrix[0])
+        def isToeplitz(row, col):
+            if row + 1 < m and col + 1 < n and matrix[row][col] == matrix[row+1][col +1]:
+                return True
+        for i in range(m-1):
+            for j in range(n-1):
+                if isToeplitz(i, j):
+                    continue
+                else:
+                    return False
+        return True
+        
