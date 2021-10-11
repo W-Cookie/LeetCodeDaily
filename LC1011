@@ -1,0 +1,25 @@
+class Solution:
+    def shipWithinDays(self, weights: List[int], days: int) -> int:
+        # The search space is sorted，so we can use binary search on the search space
+        lo, hi = max(weights), sum(weights)   
+        while lo < hi:
+            mid = (lo + hi) // 2
+            # tot is the weights already put on the conveyor, res is the days
+            tot, res = 0, 1
+            for wt in weights:
+                if tot + wt > mid:
+                    # start a new day with wt weight on the conveyor
+                    res += 1
+                    tot = wt
+                else:
+                    # add the total weights on th econveyor
+                    tot += wt
+            if res <= days:
+                hi = mid
+            else:
+                lo = mid+1
+        return lo
+        
+                
+                
+        
