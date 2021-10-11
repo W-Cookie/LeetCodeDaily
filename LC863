@@ -1,0 +1,39 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
+        adj = {}
+        queue = [root]
+        while queue:
+            cur = queue.pop(0)
+            if cur.val not in adj:
+                adj[cur.val] = []
+            if cur.left:
+                adj[cur.val].append(cur.left.val)
+                adj[cur.left.val] = [cur.val]
+                queue.append(cur.left)
+            if cur.right:
+                adj[cur.val].append(cur.right.val)
+                adj[cur.right.val] = [cur.val]
+                queue.append(cur.right)
+                
+
+        q = [target.val]
+        seen = set()
+        dist = 0
+        while k > dist and q:
+            for i in range(len(q)):
+                curval = q.pop(0)
+                seen.add(curval)
+                for j in adj[curval]:
+                    if j not in seen:
+                        q.append(j)
+            dist += 1
+
+        return q
+        
