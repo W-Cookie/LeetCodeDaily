@@ -1,0 +1,10 @@
+class Solution:
+    def canPermutePalindrome(self, s: str) -> bool:
+        seen = set()
+        for c in s:
+            if c not in seen:
+                seen.add(c)
+            else:
+                seen.remove(c)
+        return len(seen)<2
+        
