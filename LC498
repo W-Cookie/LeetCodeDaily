@@ -1,0 +1,18 @@
+class Solution:
+    def findDiagonalOrder(self, mat: List[List[int]]) -> List[int]:
+        #  the sum of indices on all diagonals are equal
+        dict = {}
+        for i in range(len(mat)):
+            for j in range(len(mat[0])):
+                if i+j not in dict:
+                    dict[i+j] = [mat[i][j]]
+                else:
+                    dict[i+j].append(mat[i][j])
+        res = []
+        for key in sorted(dict.keys()):
+            if key%2 == 1:
+                res += dict[key]
+            else:
+                res += dict[key][::-1]
+        return res
+            
