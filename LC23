@@ -1,0 +1,30 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+# heapq is a binary heap, with O(log n) push and O(log n) pop
+# solution 3, priority queue (min heap) solution, time O(Nlogk), k is the number of linked list because the heap keeps at most k elements each time
+        h = [(l.val, idx) for idx, l in enumerate(lists) if l]
+        heapq.heapify(h)
+        # h = []
+        # for idx, l in enumerate(lists):
+        #     if l:
+        #         heapq.heappush(h, (l.val, idx))
+        head = cur = ListNode(None)
+        while h:
+            val, idx = heapq.heappop(h)
+            cur.next = ListNode(val)
+            cur = cur.next
+            node = lists[idx] = lists[idx].next
+            if node:
+                heapq.heappush(h, (node.val, idx))
+        return head.next
+# solution 1 brute force: read each list of node one by one, sort, make list node, time: O(NlogN), time: O(N), N is the total nnumber of nodes
+
+# soluction 2 Compare every nodes (head of every linked list) and get the node with the smallest value. time O(kN), k is the number of linked list, space O(1) if implemented in place
+        
+        
+        
