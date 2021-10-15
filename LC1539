@@ -1,0 +1,26 @@
+class Solution:
+    def findKthPositive(self, arr: List[int], k: int) -> int:
+        #binary search solution
+        l, r = 0, len(arr)-1
+        while l<=r:
+            mid = (l+r)//2
+            #arr[i] - (i+1) is the missing integers before
+            if arr[mid]-(mid+1) < k:
+                l = mid+1
+            else:
+                r = mid-1
+        #At the end of the loop, left = right + 1, and the kth missing number is in-between arr[right] and arr[left]. The number of integers missing before arr[right] is arr[right] - right - 1. Hence, the number to return is arr[right] + k - (arr[right] - right - 1) = k + left.
+        return left+k
+                
+#         # O(N) solution
+#         lo = 1
+#         for i in arr:
+#             if k > i-lo:
+#                 k -= i-lo
+#             else:
+#                 return lo+k-1
+#             lo = i+1
+#         if k>0:
+#             return lo+k-1
+            
+        
