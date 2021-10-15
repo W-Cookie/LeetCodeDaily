@@ -1,0 +1,53 @@
+class Solution:
+    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+        p1 = 0 
+        p2 = 0
+        res = []
+        while p1<len(firstList) and p2<len(secondList):
+            l1, r1 = firstList[p1]
+            l2, r2 = secondList[p2]
+            l = max(l1, l2)
+            r = min(r1, r2)
+            if l<=r:
+                res.append([l, r])
+            if r1 < r2:
+                p1 += 1
+            else:
+                p2 += 1
+        return res
+            
+#     # enumerate all cases solution: O(M+N)
+#     def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+#         p1 = 0 
+#         p2 = 0
+#         res = []
+#         while p1<len(firstList) and p2<len(secondList):
+#             l1, r1 = firstList[p1]
+#             l2, r2 = secondList[p2]
+#             # when they have overlap:
+#             # when r1 = r2
+#             if r1 == r2:
+#                 overlap = [max(l1,l2), r1]
+#                 p1 += 1
+#                 p2 += 1
+#                 res.append(overlap)
+#             #when r1 < r2
+#             elif r1<r2:
+#                 #when r1<r2 and they have overlap
+#                 if r1>=l2:
+#                     overlap = [max(l1,l2), r1]
+#                     res.append(overlap)
+#                 p1 += 1
+#                 #when r1<l2, means no overlap at all, do nothing. move p1 to next
+#             #when r1>r2
+#             else:
+#                 #when they have overlap
+#                 if r2>=l1:
+#                     overlap = [max(l1,l2), r2]
+#                     res.append(overlap)
+#                 p2 += 1
+#         return res
+                    
+                
+        
+        
