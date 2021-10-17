@@ -1,6 +1,36 @@
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        #O(Nlogk)
+        #O(N) solution quickselect 
+        def partition(l, r, pivot_index):
+            pivot = nums[pivot_index]
+            #swap pivot and end values
+            nums[pivot_index], nums[r] = nums[r], nums[pivot_index]
+            #move smaller elements to left
+            store_index = l
+            for i in range(l,r):
+                if nums[i]<pivot:
+                    nums[store_index], nums[i] = nums[i], nums[store_index]
+                    store_index += 1
+            #move pivot to final place
+            nums[r], nums[store_index] = nums[store_index], nums[r]
+            return store_index
+        def select(l,r,k_smallest):
+            if l == r:
+                return nums[l]
+            pivot_index = random.randint(l,r)
+            pivot_index = partition(l, r , pivot_index)
+            if k_smallest == pivot_index:
+                return nums[k_smallest]
+            elif k_smallest < pivot_index:
+                return select(l, pivot_index-1, k_smallest)
+            else:
+                return select(pivot_index+1,r, k_smallest)
+        
+        return select(0, len(nums) - 1, len(nums) - k)
+        
+        # #O(Nlogk) priority queue/ heapqueue solution
+        # return heapq.nlargest(k, nums)[-1]
+      
         return heapq.nlargest(k, nums)[-1]
 #         # solution 1
 #         nums.sort()
