@@ -1,0 +1,49 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def flatten(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        # space o(1) solution。 morris traversal
+        if not root:
+            return None
+        node = root
+        while node:
+            if node.left:
+                rightmost = node.left
+                while rightmost.right:
+                    rightmost = rightmost.right
+                
+                rightmost.right = node.right
+                node.right = node.left
+                node.left = None
+            node = node.right
+        
+        
+        
+        
+#         #time o(n), space o(n) which is occupied by the recursion stack. 
+#         def dfs(node):
+#             if not node:
+#                 return None, None
+#             lhead, ltail = dfs(node.left)
+#             rhead, rtail = dfs(node.right)
+#             tail = node
+#             if lhead:
+#                 tail.right = lhead
+#                 node.left = None
+#                 tail = ltail
+#             if rhead:
+#                 tail.right = rhead
+#                 node.left = None
+#                 tail = rtail
+                
+#             return node, tail
+#         dfs(root)
+
+        
