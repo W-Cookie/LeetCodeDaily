@@ -1,0 +1,44 @@
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        # greedy algorithm
+        
+        # Let lo, hi respectively be the smallest and largest possible number of open left brackets after processing the current character in the string
+        
+        lo = hi = 0
+        for c in s:
+            lo += 1 if c == '(' else -1
+            hi += 1 if c != ')' else -1
+            if hi < 0: break
+            lo = max(lo, 0)
+
+        return lo == 0
+                
+                
+                
+                
+#         left = []
+#         star = []
+#         for i in range(len(s)):
+#             if s[i] == "(":
+#                 left.append(i)
+#             elif s[i] == "*":
+#                 star.append(i)
+#             else:
+#                 if left:
+#                     left.pop()
+#                 elif star:
+#                     star.pop()
+#                 else:
+#                     return False
+        
+
+#         while left and star:
+#             if star.pop() < left.pop():
+#                 return False
+        
+#         if not left:
+#             return True
+#         if left and not star:
+#             return False
+        
+        
