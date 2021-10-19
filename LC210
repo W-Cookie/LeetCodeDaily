@@ -1,0 +1,49 @@
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        # topological sort
+        if not prerequisites:
+            return list(range(numCourses))
+        
+        adj = {}
+        in_degree = {}
+        for [a,b] in prerequisites:
+            if b not in adj:
+                adj[b] = [a]
+            else:
+                adj[b].append(a)
+            in_degree[a] = in_degree.get(a, 0) + 1
+            in_degree[b] = in_degree.get(b, 0) 
+            
+        queue = []
+
+        for i in range(numCourses):
+            if i not in in_degree or in_degree[i] == 0:
+                queue.append(i)
+                
+        # there is a cycle
+        if not queue:
+            return []
+        
+        #counter = 0
+        res = []
+        while queue:
+            course = queue.pop(0)
+            res.append(course)
+            #counter += 1
+            if course in adj:
+                for nextc in adj[course]:
+                    in_degree[nextc] -= 1
+                    if in_degree[nextc] == 0:
+                        queue.append(nextc)
+                        #visited.add(nextc)
+        
+        # if there are still some edges left, then there exist some cycles
+        #if counter < len(in_degree):
+        if len(res) < len(in_degree):
+            return []
+        else:
+            if numCourses == len(res):
+                return res
+            else:
+                return []
+
