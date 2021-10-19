@@ -1,0 +1,15 @@
+class Solution:
+# DP
+    def longestArithSeqLength(self, nums: List[int]) -> int:
+        dp = {}
+        for i in range(1,len(nums)):
+            for j in range(i):
+                diff = nums[i]-nums[j]
+                # element i is diff bigger than j, if there is no element that j is diff bigger than, add to the dictionary
+                if (j, diff) not in dp:
+                    dp[i, diff] = 2
+                 # if there exist element that j is diff bigger than, arithmetic subsequenece end in i is the arithmetic subsequenece ending in j plus one
+                else:
+                    dp[i, diff] = dp[j, diff] + 1
+        return max(dp.values())
+        
