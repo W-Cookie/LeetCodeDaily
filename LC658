@@ -1,0 +1,43 @@
+class Solution:
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        
+        def find_pivot(arr, x):
+            l = 0
+            r = len(arr)-1
+            while l<= r:
+                mid = l + (r-l)//2
+                if arr[mid] == x:
+                    return mid
+                elif arr[mid] < x:
+                    l = mid + 1
+                else:
+                    r = mid -1
+            return l
+        
+        
+        pr = find_pivot(arr, x)
+        pl = pr - 1
+        res = []
+        while k>0 and pl >= 0 and pr < len(arr):
+            if abs(arr[pl]-x) <= abs(arr[pr]-x):
+                res = [arr[pl]]+res
+                pl -= 1
+            else:
+                res.append(arr[pr])
+                pr += 1
+            k -= 1
+            
+        if k == 0:
+            return res
+        elif pl >= 0:
+            res = arr[pl-k+1:pl+1] + res
+            return res
+        else:
+            res = res + arr[pr:pr+k]
+            return res
+            
+            
+                
+        
+                
+        
