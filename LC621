@@ -1,0 +1,23 @@
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        # The idea is to sort the tasks by frequency in the descending order and fulfill as many idle slots as one could
+        # compute frequencies for each task
+        freq = [0] * 26
+        for task in tasks:
+            freq[ord(task) - ord('A')] += 1
+        freq = sorted(freq)
+        
+        freq_max = freq.pop()
+        # idle time needed for the most frequent tasks
+        # So as long as the idles between the most frequent tasks are filled, it's guaranteed that the rest of tasks will not incur new idle time (bcs we can just insert them in between 'A's
+        idle_time = (freq_max-1)*n
+        
+        while freq and idle_time > 0:
+            # here we use min(freq.pop(), freq_max-1) because the max idle_slot we have each time is freq_max-1
+            idle_time -= min(freq.pop(), freq_max-1)
+        idle_time = max(0, idle_time)
+        
+        # len(tasks) is the task running time
+        return idle_time + len(tasks)
+        
+        
