@@ -1,0 +1,25 @@
+class Solution:
+    def findRLEArray(self, encoded1: List[List[int]], encoded2: List[List[int]]) -> List[List[int]]:
+        p1 = 0
+        p2 = 0
+        
+        res = []
+        
+        while p1<len(encoded1) and p2<len(encoded2):
+            product = encoded1[p1][0] * encoded2[p2][0]
+            freq = min(encoded1[p1][1], encoded2[p2][1])
+            
+            encoded1[p1][1] -= freq
+            if encoded1[p1][1] == 0:
+                p1 += 1
+            encoded2[p2][1] -= freq
+            if encoded2[p2][1] == 0:
+                p2 += 1
+                
+            
+            if not res or product != res[-1][0]:
+                res.append([product,freq])
+            else:
+                res[-1][1] += freq
+                
+        return res   
