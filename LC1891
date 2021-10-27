@@ -1,0 +1,19 @@
+class Solution:
+    def maxLength(self, ribbons: List[int], k: int) -> int:
+        # binary search
+        rsum = sum(ribbons)
+        if rsum//k <1:
+            return 0
+        lo = 1
+        hi = min(rsum//k,max(ribbons))
+        while lo<hi:
+            # When changing l = m, we need to take ceiling instead of floor (m = (l + r) / 2 assigns the floor to m).
+            mid = (lo+hi+1)//2
+            chunk = 0
+            for ribbon in ribbons:
+                chunk += ribbon//mid
+            if chunk >= k:
+                lo = mid
+            else:
+                hi = mid-1 
+        return lo
