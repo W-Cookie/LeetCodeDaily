@@ -1,0 +1,33 @@
+class TicTacToe:
+
+    def __init__(self, n: int):
+        self.size = n
+        self.col_count = [0]*n
+        self.row_count = [0]*n
+        self.diagnol = [0]*2
+        
+
+    def move(self, row: int, col: int, player: int) -> int:
+        move = 1
+        if player == 2:
+            move = -1
+        self.row_count[row] += move
+        self.col_count[col] += move
+        if row == col:
+            self.diagnol[0] += move
+        if row+col == self.size - 1:
+            self.diagnol[1] += move
+            
+        if abs(self.row_count[row]) == self.size or abs(self.col_count[col]) == self.size or abs(self.diagnol[0]) == self.size or abs(self.diagnol[1]) == self.size:
+            return player
+        else:
+            return 0
+        
+        
+            
+        
+
+
+# Your TicTacToe object will be instantiated and called as such:
+# obj = TicTacToe(n)
+# param_1 = obj.move(row,col,player)
