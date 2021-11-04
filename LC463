@@ -1,0 +1,50 @@
+class Solution:
+    def islandPerimeter(self, grid: List[List[int]]) -> int:
+        # BFS o(m*n), o(1)
+        m = len(grid)
+        n = len(grid[0])
+        
+        queue = []
+        dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        perimeter = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    queue.append((i, j))
+                if queue:
+                    break
+            if queue:
+                break
+        visited = set()
+        visited.add(queue[0])
+        while queue:
+            cur_r, cur_c = queue.pop(0)
+            nlands = 0
+            for dir in dirs:
+                r = cur_r + dir[0]
+                c = cur_c + dir[1]
+                if r >= 0 and r < m and c >= 0 and c < n and grid[r][c] == 1:
+                    if (r, c) not in visited:
+                        queue.append((r, c))
+                        visited.add((r, c))
+                    nlands += 1
+            perimeter += (4-nlands)
+        return perimeter
+                        
+             
+        
+        
+        
+#         # liner scan o(m*n), o(1)
+#         perimeter = 0
+#         for i in range(len(grid)):
+#             for j in range(len(grid[0])):
+#                 if grid[i][j] == 1:
+#                     perimeter += 4
+                    
+#                     if i > 0 and grid[i-1][j] == 1:
+#                         perimeter -= 2
+#                     if j > 0 and grid[i][j-1] == 1:
+#                         perimeter -= 2
+#         return perimeter
+        
