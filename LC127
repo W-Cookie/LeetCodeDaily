@@ -1,0 +1,75 @@
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        # Could also use a bidirectional BFS
+        # Since all words are of same length.
+        L = len(beginWord)
+        # !!!!!!!!!!!!!!!!!!!!!!
+        # Dictionary to hold combination of words that can be formed,
+        # from any given word. By changing one letter at a time.
+        all_combo_dict = {}
+        for word in wordList:
+            for i in range(L):
+                # Key is the generic word
+                # Value is a list of words which have the same intermediate generic word.
+                if word[:i] + "*" + word[i+1:] not in all_combo_dict:
+                    all_combo_dict[word[:i] + "*" + word[i+1:]] = [word]
+                else:
+                    all_combo_dict[word[:i] + "*" + word[i+1:]].append(word)
+                
+        queue_begin = [beginWord]
+        queue_end = [endWord]
+        visited = set()
+        dist = 1
+        while queue:
+            for i in range(len(queue)):
+                cur = queue.pop(0)
+                if cur == endWord:
+                    return dist
+                for p in range(L):
+                    # Intermediate words for current word
+                    intermediate_word = cur[:p] + "*" + cur[p+1:]
+                    for word in all_combo_dict.get(intermediate_word, []):
+                        if word not in visited:
+                            queue.append(word)
+                        visited.add(word)
+            dist += 1
+        return 0
+                        
+
+        
+
+#         # Since all words are of same length.
+#         L = len(beginWord)
+#         # !!!!!!!!!!!!!!!!!!!!!!
+#         # Dictionary to hold combination of words that can be formed,
+#         # from any given word. By changing one letter at a time.
+#         all_combo_dict = {}
+#         for word in wordList:
+#             for i in range(L):
+#                 # Key is the generic word
+#                 # Value is a list of words which have the same intermediate generic word.
+#                 if word[:i] + "*" + word[i+1:] not in all_combo_dict:
+#                     all_combo_dict[word[:i] + "*" + word[i+1:]] = [word]
+#                 else:
+#                     all_combo_dict[word[:i] + "*" + word[i+1:]].append(word)
+                
+#         queue = [beginWord]
+#         visited = set()
+#         dist = 1
+#         while queue:
+#             for i in range(len(queue)):
+#                 cur = queue.pop(0)
+#                 if cur == endWord:
+#                     return dist
+#                 for p in range(L):
+#                     # Intermediate words for current word
+#                     intermediate_word = cur[:p] + "*" + cur[p+1:]
+#                     for word in all_combo_dict.get(intermediate_word, []):
+#                         if word not in visited:
+#                             queue.append(word)
+#                         visited.add(word)
+#             dist += 1
+#         return 0
+                        
+        
+        
