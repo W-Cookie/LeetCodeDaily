@@ -1,0 +1,66 @@
+class Solution:
+    def wallsAndGates(self, rooms: List[List[int]]) -> None:
+        """
+        Do not return anything, modify rooms in-place instead.
+        """
+        # BFS  all gates the same time
+        # time o(mn) because each cell is visited only once
+        # O(mn). The space complexity depends on the queue's size. We insert at most m \times nm×n points into the queue
+        m = len(rooms)
+        n = len(rooms[0])
+        dirs = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+        queue = []
+        for i in range(m):
+            for j in range(n):
+                if rooms[i][j] == 0:
+                    queue.append((i, j, 0))
+                    
+        visited = set()
+        while queue:
+            cur_r, cur_c, distance = queue.pop(0)
+            for dir in dirs:
+                r = cur_r + dir[0]
+                c = cur_c + dir[1]
+                if r < 0 or r >= m or c < 0 or c >= n or rooms[r][c] == -1 or rooms[r][c] == 0 or (r,c) in visited:
+                    continue
+                else:
+                    rooms[r][c] = distance + 1
+                    queue.append((r, c, distance + 1))
+                    visited.add((r,c))
+        return rooms
+        
+        
+        
+        
+        
+        
+        
+        
+#         # time 
+#         def fill(i, j):
+#             #distance = 1
+#             queue = [(i, j, 0)]
+#             while queue:
+#                 for i in range(len(queue)):
+#                     cur_r, cur_c, distance = queue.pop(0)
+#                     for dir in dirs:
+#                         r = cur_r + dir[0]
+#                         c = cur_c + dir[1]
+#                         if r < 0 or r >= m or c < 0 or c >= n or rooms[r][c] == -1 or rooms[r][c] == 0:
+#                             continue
+#                         else:
+#                             if rooms[r][c] > distance + 1:
+#                                 rooms[r][c] = distance + 1
+#                                 queue.append((r, c, distance + 1))
+                            
+
+#         m = len(rooms)
+#         n = len(rooms[0])
+#         dirs = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+        
+#         for i in range(m):
+#             for j in range(n):
+#                 if rooms[i][j] == 0:
+#                     fill(i,j)
+#         return rooms
+        
