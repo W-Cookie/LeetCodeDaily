@@ -1,0 +1,44 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isCompleteTree(self, root: Optional[TreeNode]) -> bool:
+        # idea is if we do a level order traversal and we see a non emptyNode followed by an empty node, it isn't a complete binary tree.
+        if not root:
+            return True
+        
+        seenEmpty = False;
+        queue = [root]
+        while queue:
+            cur = queue.pop(0)
+            if not cur:
+                seenEmpty = True
+            elif seenEmpty:
+                return False
+            else:
+                queue.append(cur.left)
+                queue.append(cur.right)
+        return True;
+        
+#         # idea is we traverse al the nodes and record the node index of each tree, the total number of n level tree is 2**n -1
+        
+#         if not root:
+#             return True
+#         queue = [(root, 1)]
+#         # queue = dequeue([(root, 1)])
+#         level = 0
+#         res = []
+#         while queue:
+#             for i in range(len(queue)):
+#                 cur, coord = queue.pop(0)
+#                 res. append(coord)
+#                 if cur.left:
+#                     queue.append((cur.left, 2*coord))
+#                 if cur.right:
+#                     queue.append((cur.right, 2*coord+1))
+#         return len(res) == res[-1]
+        
+        
