@@ -1,0 +1,61 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        # solution 1, read in list and use two pointers. o(n) / o(n)
+        # solution 2, recursion, o(n) / o(n)
+#         self.front_pointer = head
+
+#         def recursively_check(current_node = head):
+#             if current_node is not None:
+#                 if not recursively_check(current_node.next):
+#                     return False
+#                 if self.front_pointer.val != current_node.val:
+#                     return False
+#                 self.front_pointer = self.front_pointer.next
+#             return True
+
+#         return recursively_check()
+    
+        # Reverse Second Half In-place o(n) / o(1)
+        if not head:
+            return True
+        
+        # find the mid point linked node
+        def end_first_half(head):
+            fast = head
+            slow = head
+            while fast.next is not None and fast.next.next is not None:
+                fast = fast.next.next
+                slow =slow.next
+            return slow
+        
+        def reverse(head):
+            previous = None
+            cur = head
+            while cur:
+                next_node = cur.next
+                cur.next = previous
+                previous = cur
+                cur = next_node
+            return previous
+        
+        first_end = end_first_half(head)
+        second_start = reverse(first_end.next)
+        
+        res = True
+        first = head
+        second = second_start
+        while res and second:
+            if first.val != second.val:
+                res = False
+            first = first.next
+            second = second.next
+        # Restore the list and return the result.
+        first_end.next = reverse(second_start)
+        return res
+        
+        
