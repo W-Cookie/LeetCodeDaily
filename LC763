@@ -1,0 +1,17 @@
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+        # time o(n), space o(1)(because last do not exceed 26)
+        last = {}
+        # store the last position of each character in the dictionary
+        for i, c in enumerate(s):
+            last[c] = i
+        res = []
+        # j record the last index of each char encountered, anchor is the start of current partition
+        j = anchor = 0
+        for i, c in enumerate(s):
+            j = max(j, last[c])
+            # if j meet current index, append res
+            if i == j:
+                res.append(i-anchor+1)
+                anchor = i + 1
+        return res
