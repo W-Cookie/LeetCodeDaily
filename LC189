@@ -1,0 +1,43 @@
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # o(n), o(n) solution
+        # res = [0]*len(nums)
+        # for i in range(len(nums)):
+        #     index = (i+k) %len(nums)
+        #     res[(i+k)%len(nums)] = nums[i]
+        # nums[:] = res
+        
+#         #o(1) space solution
+#         n = len(nums)
+#         k = k%n
+        
+#         start = count = 0
+#         while count < n:
+#             current, prev = start, nums[start]
+#             while True:
+#                 next_id = (current+k) % n
+#                 nums[next_id], prev = prev, nums[next_id]
+#                 current = next_id
+#                 count += 1
+                
+#                 if start == current:
+#                     break
+#             start += 1
+            
+        #reverse, o(1) space solutipn
+        def reverse(start, end):
+            while start < end:
+                nums[start], nums[end] = nums[end], nums[start]
+                start, end = start+1, end-1
+        n = len(nums)
+        k = k%n
+        
+        reverse(0, n-1)
+        reverse(0, k-1)
+        reverse(k, n-1)
+        
+            
+        
