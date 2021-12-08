@@ -1,0 +1,47 @@
+class Solution:
+    def heightChecker(self, heights: List[int]) -> int:
+        # counting sort, o(n), because 1 <= heights.length <= 100, 1 <= heights[i] <= 100
+        cnt = [0]*(100+1) # position i recording the count of the number i 
+        for h in heights:
+            cnt[h] += 1
+        # change count to the accumulative count
+        for i in range(1,len(cnt)):
+            cnt[i] += cnt[i-1]
+        #array for sorted heights
+        heights_sorted = [0]*len(heights)
+        res = 0
+        for h in heights:
+            # put corresponding element by cumulative sort
+            heights_sorted[cnt[h] - 1] = h
+            # check correspinding position
+            if heights_sorted[cnt[h] - 1] != heights[cnt[h] - 1]:
+                res += 1
+            cnt[h] -= 1
+        return res
+        
+        
+        
+#         # solution1, quick sort, time o(nlogn), space o(n)
+#         def quicksort(nums, left, right):
+#             if left < right:
+#                 partition_index = partition(nums, left, right)
+#                 quicksort(nums, left, partition_index - 1)
+#                 quicksort(nums, partition_index + 1, right)
+#                 return nums
+            
+#         def partition(nums,left, right):
+#             pivot = nums[right]
+#             index = left
+#             for i in range(left, right):
+#                 if nums[i] <= pivot:
+#                     nums[index], nums[i] = nums[i], nums[index]
+#                     index += 1
+#             nums[index], nums[right] = nums[right], nums[index]
+#             return index
+        
+#         expected = quicksort(copy.deepcopy(heights), 0, len(heights)-1)
+#         count = 0
+#         for i in range(len(heights)):
+#             if heights[i] != expected[i]:
+#                 count += 1
+#         return count
