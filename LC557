@@ -1,0 +1,14 @@
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        def reverse(arr):
+            l = 0
+            r = len(arr)-1
+            while l < r:
+                arr[l], arr[r] = arr[r], arr[l]
+                l += 1
+                r -= 1
+        s_reverse = s[::-1].split(" ")
+        reverse(s_reverse)
+        return " ".join(s_reverse)
+        
+        
