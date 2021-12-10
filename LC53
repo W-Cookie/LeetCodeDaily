@@ -1,0 +1,9 @@
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        submax = subsum = nums[0]
+        for num in nums[1:]:
+            # current subarray sum is the max of num and subsum+nums because subsum could be negative
+            subsum = max(num, subsum + num)
+            # keep updating max
+            submax = max(submax, subsum)
+        return submax
