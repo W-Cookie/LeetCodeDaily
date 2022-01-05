@@ -1,0 +1,48 @@
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # # hashmap/dictionary, time o(m+n), space o(m+n)
+        # counter1 = {}
+        # for num in nums1:
+        #     counter1[num] = counter1.get(num, 0) + 1
+        # counter2 = {}
+        # for num in nums2:
+        #     counter2[num] = counter2.get(num, 0) + 1
+        # res = []
+        # for key in counter1.keys():
+        #     if counter2.get(key, 0) != 0:
+        #         res.extend([key]*(min(counter1[key],counter2[key])))
+        # return res
+    
+#         # hashmap/dictionary, time o(m+n), space o(min(m+n))
+#         if len(nums1)>len(nums2):
+#             return self.intersect(nums2, nums1)
+#         counter = {}
+#         for num in nums1:
+#             counter[num] = counter.get(num, 0) + 1
+#         res = []
+#         for num in nums2:
+#             if counter.get(num, 0) > 0:
+#                 res.append(num)
+#                 counter[num] -= 1
+        
+#         return res
+    
+        # sort, time o(nlogn+mlogm), space O(logn+logm) to o(m+n) depending on the implementation of the sorting algorithm.
+        nums1.sort()
+        nums2.sort()
+        i, j = 0, 0
+        res = []
+        while i < len(nums1) and j < len(nums2):
+            if nums1[i] == nums2[j]:
+                res.append(nums1[i])
+                i += 1
+                j += 1
+            elif nums1[i] < nums2[j]:
+                i += 1
+            else:
+                j += 1
+        return res
+            
+            
+            
+            
